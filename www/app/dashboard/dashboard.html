@@ -1,0 +1,21 @@
+﻿<ion-view>
+	<h5 ng-repeat= "searchs in vm.response | testFilter: vm.recentSearchCurrentPage*7 | limitTo:7">
+		{{searchs.name}}
+	</h5>
+	<button ng-disabled="vm.recentSearchCurrentPage == 0" ng-click="vm.recentSearchCurrentPage=vm.recentSearchCurrentPage-1">
+        Previous
+    </button>
+    <button ng-disabled="vm.recentSearchCurrentPage >= vm.response.length/7 - 1" ng-click="vm.recentSearchCurrentPage=vm.recentSearchCurrentPage+1">
+        Next
+    </button>
+	
+	<h4 ng-repeat= "todo in vm.todoResponse | testFilter: vm.todoCurrentPage*7 | limitTo:7">
+		{{todo.object_name}} / {{todo.activity_name}}
+	</h4>
+	<button ng-disabled="vm.todoCurrentPage == 0" ng-click="vm.todoCurrentPage=vm.todoCurrentPage-1">
+        Previous
+    </button>
+    <button ng-disabled="vm.todoCurrentPage >= vm.todoResponse.length/7 - 1" ng-click="vm.todoCurrentPage=vm.todoCurrentPage+1">
+        Next
+    </button>
+</ion-view>

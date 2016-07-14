@@ -1,0 +1,110 @@
+/*modules*/
+/* appearance for button of select html */
+/*Vendor*/
+/*----------------Main CSS------------------*/
+body {
+  font-size: 14px;
+  font-family: "Arial", sans-serif; }
+
+/*----------------Login--------------------*/
+.login-page .header {
+  background-color: #EFF0F0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  position: relative; }
+  .login-page .header::before {
+    border-top: 1px solid #BBBDBF;
+    display: block;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: -.5em;
+    left: 0;
+    right: 0; }
+  .login-page .header > *:first-child {
+    margin-bottom: 15px; }
+  .login-page .header > *:not(:first-child) {
+    margin: 2.5px 0; }
+  .login-page .header h3 {
+    color: #095880; }
+  .login-page .header span {
+    color: #7f8184;
+    font-weight: 500;
+    margin-top: 10px !important; }
+
+.login-page .main {
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column; }
+  .login-page .main .login-form {
+    width: 80%;
+    margin: 7vh auto 0; }
+    .login-page .main .login-form > * {
+      margin: 0 0 5px; }
+    .login-page .main .login-form input[type="text"] {
+      font-style: italic; }
+    .login-page .main .login-form .item-input.input-error {
+      border-color: #F38071 !important; }
+  .login-page .main .icon-user {
+    background-image: url("../img/user-login.png");
+    background-size: contain;
+    height: 14px;
+    background-repeat: no-repeat;
+    padding-right: 30px; }
+  .login-page .main .icon-password {
+    background-image: url("../img/pass-login.png");
+    background-size: contain;
+    height: 14px;
+    background-repeat: no-repeat;
+    padding-right: 30px; }
+  .login-page .main .login-button {
+    background-image: url("../img/btnLogin.png");
+    background-size: cover;
+    color: #FFF;
+    border-radius: 2px; }
+  .login-page .main .error-msg {
+    color: red;
+    margin: 20px 0 0 40px; }
+    .login-page .main .error-msg::before {
+      content: " ";
+      background-size: cover;
+      width: 16px;
+      height: 16px;
+      background-image: url("../img/login-error-icon.png");
+      display: inline-block;
+      margin-bottom: -3px;
+      margin-right: 5px; }
+
+.login-page .footer {
+  background-color: #7F8184;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.8em;
+  height: 120px; }
+  .login-page .footer::before {
+    border-top: 1px solid #BBBDBF;
+    display: block;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: -.5em;
+    left: 0;
+    right: 0; }
+  .login-page .footer .img-connect {
+    background-size: cover;
+    background-image: url("../img/background-login-connection.png");
+    width: 200px;
+    height: 200px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: -10em; }
+
+/*--------------------------------------------------------------------------*/

@@ -1,0 +1,8 @@
+{
+  "name": "ionic-blankapp",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "ionic": "1.3.1"
+  }
+}

@@ -1,0 +1,82 @@
+<ion-view view-title="Login" class="login-page">
+
+  <ion-content class="body">
+    <section class="header">
+      <img src="img/csc_logo_red.png" alt="CSC Logo" />
+      <img src="img/FirstDoc_logo_small_bg_transparent.png" alt="FirstDoc Logo" />
+      <h3>FirstDoc User Experince</h3>
+      <span>FirstDoc Mobile 0.9</span>
+    </section>
+    <section class="main">
+      <div class="list list-inset login-form">
+        <label class="item item-input " ng-class="{'input-error':vm.userName.length == 0 || vm.userNameEmpty }">
+          <i class="icon placeholder-icon icon-user"></i>
+          <input type="text" placeholder="Username" ng-model="vm.userName"  ng-change="vm.userNameEmpty = false">
+        </label>
+        <label class="item item-input" ng-class="{'input-error':vm.password.length == 0 || vm.passwordEmpty }">
+          <i class="icon placeholder-icon icon-password" ></i>
+          <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" ng-model="vm.password" ng-change="vm.passwordEmpty = false">
+        </label>
+        <button class="button button-block login-button" ng-click="vm.login()">
+          Login
+        </button>
+      </div>
+
+      <div class="error-msg" ng-show="vm.errorLogin">
+        {{vm.errorMessage}}
+      </div>
+    </section>
+    <!-- <label class="item item-input item-floating-label">
+      <span class="input-label">First Name</span>
+      <input type="text" placeholder="First Name" ng-model="vm.userName">
+    </label>
+
+    <label class="item item-input item-floating-label">
+      <span class="input-label">Pasword</span>
+      <input type="password" placeholder="Password" ng-model="vm.password">
+    </label> -->
+
+    <!-- <ion-item href="#/tabsDemo/chats">
+      <div class="card">
+        <div class="item item-text-wrap">/tabsDemo/chats</div>
+      </div>
+    </ion-item>
+    <ion-item href="#/mainMenu/menuOne">
+      <div class="card">
+        <div class="item item-text-wrap">/mainMenu/menuOne</div>
+      </div>
+    </ion-item>
+
+    <button class="button button-outline button-positive" ng-click="vm.login()">Login</button>
+    <button class="button button-outline button-positive" ng-click="vm.getRecentSearch()">getRecentSearch</button>
+
+    <button class="button button-outline button-positive" ng-click="vm.getSimpleSearchResult()">getSimpleSearchResult</button>
+    <button class="button button-outline button-positive" ng-click="vm.getSimpleSearchKeywords()">getSimpleSearchKeywords</button>
+        <div class="card">
+            <div class="item item-text-wrap type-card">
+                <ion-spinner class="type-spiner" icon="ios" ng-show="vm.isLoading"></ion-spinner>
+                <div class="row item item-divider type-header">
+                  <h3 class="title">MY SEARCH</h3>
+                </div>
+                <div class="row type-row" ng-repeat="data in vm.data | startFrom:vm.currentPage*7 | limitTo:7 ">
+                    <div class="col">{{data.name}}</div>
+                </div>   
+                <div class="row paging-btn">
+                  <button class="col col-33 col-offset-33" ng-click="vm.currentPage=vm.currentPage-1" ng-disabled="vm.currentPage == 0">Previous</button>
+                  <button class="col"  ng-click="vm.currentPage=vm.currentPage+1" ng-disabled="vm.currentPage >= vm.data.length/7 - 1" >Next</button>
+                </div> 
+            </div>  
+     </div> 
+        
+    <button class="button button-outline button-positive" ng-click="vm.getSavedSearchResult()">getSavedSearchResult</button>
+    <button class="button button-outline button-positive" ng-click="vm.getSavedSearchKeywords()">getSavedSearchKeywords</button>
+
+    <button class="button button-outline button-positive" ng-click="vm.getTilesSettings()">getTilesSettings</button> -->
+
+  </ion-content>
+  <section class="footer bar bar-footer">
+    <i class="img-connect"></i>
+    <span>&copy; Copyright (2002-2016) Computer Sciences Corporation</span>
+    <span>All Rights Reserved</span>
+  </section>
+</ion-view>
