@@ -1,0 +1,19 @@
+<section class="dashboard-block search-tile">
+	<div class="dashboard-block-title" ng-click="vm.titleClick()">
+	  my searches
+	</div>
+	<div class="dashboard-block-body">
+	  <div spinner-directive ng-show="vm.isSearchRecentLoading"></div>	
+	  <div class="row responsive-sm responsive-md responsive-lg">
+	    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+	      <ion-slide ng-repeat="page in vm.arrayPageNumber">
+	        <div class="col" ng-click="vm.docClick()" ng-repeat="doc in vm.searchRecentResponse | paginationFilter: page*vm.pageSize | limitTo:vm.pageSize">{{doc.name}}</div>
+	      </ion-slide>
+	    </ion-slide-box>
+	  </div>
+	</div>
+	<div class="dashboard-block-footer">
+	  <button class="button button-clear button-small button-tile" type="button" name="button" disabled="disabled">Previous</button>
+	  <button class="button button-clear button-small button-tile" type="button" name="button">Next</button>
+	</div>
+</section>

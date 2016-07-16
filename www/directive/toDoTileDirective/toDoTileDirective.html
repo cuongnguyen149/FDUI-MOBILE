@@ -1,0 +1,33 @@
+<section  class="dashboard-block todo-tile">
+    
+  <div class="dashboard-block-title">
+    my to do list
+  </div>
+  <div class="dashboard-block-body">
+    <div class="row header">
+      <div class="col col-40"> </div>
+      <div class="col col-20">Task</div>
+      <div class="col col-40">Document</div>
+    </div>
+    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+      <ion-slide>
+        <div class="row overdue"  ng-click="vm.docClick()">
+          <div class="col col-40 set-icon">
+            <i class="icon icon-filepacked"></i>
+            <i class="icon icon-hight-priority"></i>
+            <i class="icon icon-finish-doc"></i>
+          </div>
+          <div class="col col-20">Reviewer</div>
+          <div class="col col-40">Long Document with Long Title and has long description</div>
+        </div>
+        
+      </ion-slide>
+      
+    </ion-slide-box>
+
+  </div>
+  <div class="dashboard-block-footer">
+    <button class="button button-clear button-small button-tile" type="button" name="button">Previous</button>
+    <button class="button button-clear button-small button-tile" type="button" name="button" disabled="disabled">Next</button>
+  </div>
+</section>
