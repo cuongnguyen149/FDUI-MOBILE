@@ -20,6 +20,7 @@ var fdui = {
     fdui.filter = fdui.module.filter;
     fdui.viewModel = fdui.module.controller;
     fdui.provider = fdui.module.provider;
+    fdui.directive = fdui.module.directive;
     fdui.injectables = {};
     
     var configHttpProvider = function ($http) {
@@ -31,9 +32,6 @@ var fdui = {
     fdui.module.config(['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$httpProvider',
         function ($controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $httpProvider) {
             
-            $httpProvider.defaults.withCredentials = true;
-            $httpProvider.interceptors.push('securityProvider');
-
             fdui.registerRoutes($stateProvider, $urlRouterProvider);
         }
     ]);
@@ -72,6 +70,7 @@ var fdui = {
             });
         }
     ]);
+
     angular.element(document).ready(function () {
         angular.bootstrap(document, [fdui.settings.applicationName], { strictDi: true });
     });
@@ -236,7 +235,7 @@ var fdui = {
     ServiceBase.prototype.getAsync = function (actionName) {
         var self = this;
         var d = this.$q.defer();
-        this.$http.get(this.url + actionName).then(
+        this.$http.get(actionName).then(
             function successCallback(response) {
                 d.resolve(response.data);
             },
@@ -334,6 +333,16 @@ var fdui = {
         var localStorage = this.$window.localStorage;
         return localStorage[key];
     };
+    ViewModelBase.prototype.getArrayPageNumber = function(length){
+        var arrayPageNumber = [],
+            pageSize        = fdui.const.pagination.pageSize;
+        for(var i = 0; i < length/pageSize; i++){
+            arrayPageNumber.push(i);
+        }
+
+        return arrayPageNumber;
+    };
+    
     ViewModelBase.prototype.dispose = function () {
 
     };

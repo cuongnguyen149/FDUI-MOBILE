@@ -1,21 +1,126 @@
-﻿<ion-view>
-	<h5 ng-repeat= "searchs in vm.response | testFilter: vm.recentSearchCurrentPage*7 | limitTo:7">
-		{{searchs.name}}
-	</h5>
-	<button ng-disabled="vm.recentSearchCurrentPage == 0" ng-click="vm.recentSearchCurrentPage=vm.recentSearchCurrentPage-1">
-        Previous
-    </button>
-    <button ng-disabled="vm.recentSearchCurrentPage >= vm.response.length/7 - 1" ng-click="vm.recentSearchCurrentPage=vm.recentSearchCurrentPage+1">
-        Next
-    </button>
-	
-	<h4 ng-repeat= "todo in vm.todoResponse | testFilter: vm.todoCurrentPage*7 | limitTo:7">
-		{{todo.object_name}} / {{todo.activity_name}}
-	</h4>
-	<button ng-disabled="vm.todoCurrentPage == 0" ng-click="vm.todoCurrentPage=vm.todoCurrentPage-1">
-        Previous
-    </button>
-    <button ng-disabled="vm.todoCurrentPage >= vm.todoResponse.length/7 - 1" ng-click="vm.todoCurrentPage=vm.todoCurrentPage+1">
-        Next
-    </button>
-</ion-view>
+﻿<ion-header-bar align-title="center" class="bar-header-app">
+  <section class="header-contains">
+    <section class="header-main-contain">
+      <div class="header-left">
+        <!-- <i class="icon ion-navicon-round"></i> -->
+      </div>
+      <img class="img-logo" src="img/page-logo.png" alt="FirstDoc Mobile" />
+      <div class="header-right">
+        <i class="icon icon-search-toolbar"></i>
+        <i class="icon icon-home-toolbar"></i>
+        <i class="icon icon-user-toolbar" ng-click="openPopover($event)"></i><!--  Way 1 -->
+        <i class="icon icon-menu-toolbar" ng-click="popover.show($event)"></i><!--  Way 2 -->
+      </div>
+    </section>
+    <section class="header-search-contain" style="display: none;">
+      <i class="icon icon-search-toolbar"></i>
+      <input type="text" name="header-search-text" placeholder="Search">
+      <i class="icon icon-close-toolbar"></i>
+    </section>
+  </section>
+</ion-header-bar>
+<ion-content class="has-header">
+  <div search-tile-directive></div>
+  <div to-do-tile-directive></div>
+</ion-content>
+
+
+<script id="popover-user.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+      <div class="list">
+        <a class="item" ng-click="showPopup()">
+              Logout
+            </a>
+        <a class="item" ui-sref="setting">
+              Settings
+            </a>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+<script id="popover-more.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-content>
+      <div class="list">
+        <a class="item" ui-sref="login">
+              Search
+            </a>
+        <a class="item" ui-sref="setting">
+              Settings
+            </a>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>
+
+<script type="text/javascript">
+  //Way 1
+  $scope.popover = $ionicPopover.fromTemplate(template, {
+      scope: $scope
+    });
+
+  //Way 2
+  $ionicPopover.fromTemplateUrl('popover.html', {
+    scope: $scope,
+  }).then(function(popover) {
+    $scope.popover = popover;
+  });
+
+  //Functions handle popup
+  $scope.openPopover = function($event) {
+    $scope.popover.show($event);
+  };
+  $scope.closePopover = function() {
+    $scope.popover.hide();
+  };
+  //Cleanup the popover when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.popover.remove();
+  });
+  // Execute action on hide popover
+  $scope.$on('popover.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove popover
+  $scope.$on('popover.removed', function() {
+    // Execute action
+  });
+</script>
+
+<script id="popup-logout.html" type="text/ng-template">
+  <p>Do you really want to logout of the application?</p>
+  <p>You will no longer be connected to FirstDoc</p>
+</script>
+
+<script type="text/javascript">
+  // A confirm dialog
+  $scope.showPopup = function() {
+    $scope.data = {};
+
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      title: 'Logout Confirmation',
+      templateUrl: 'popup-logout.html',
+      scope: $scope,
+      buttons: [{
+        text: '<b>Yes</b>',
+        type: '',
+        onTap: function(e) {
+          //do stuff
+        }
+      }, {
+        text: 'No'
+      }]
+    });
+
+    myPopup.then(function(res) {
+      console.log('Tapped!', res);
+    });
+
+    $timeout(function() {
+      myPopup.close(); //close the popup after 3 seconds for some reason
+    }, 3000);
+  };
+</script>

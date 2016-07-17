@@ -21,15 +21,15 @@
 			this.passwordEmpty = true;
 		}
 		if(self.userName && self.password){
-			this.securityService.checkCredentialsAsync(self.userName, self.password).then(function(response){
-	            if(response.success){
-	            	self.setLocalStorageItem('userName', self.userName);
+			// this.securityService.checkCredentialsAsync(self.userName, self.password).then(function(response){
+	  //           if(response.success){
+	  //           	self.setLocalStorageItem('userName', self.userName);
 					self.navigateTo('dashboard');
-	            }else{
-	            	self.errorLogin = true;
-	            	self.errorMessage = response.errors.errorMessage;
-	            }
-	        });
+	  //           }else{
+	  //           	self.errorLogin = true;
+	  //           	self.errorMessage = response.errors.errorMessage;
+	  //           }
+	  //       });
 		}
 	};
 

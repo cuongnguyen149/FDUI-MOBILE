@@ -20,6 +20,7 @@ var fdui = {
     fdui.filter = fdui.module.filter;
     fdui.viewModel = fdui.module.controller;
     fdui.provider = fdui.module.provider;
+    fdui.directive = fdui.module.directive;
     fdui.injectables = {};
     
     var configHttpProvider = function ($http) {
@@ -31,9 +32,6 @@ var fdui = {
     fdui.module.config(['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$stateProvider', '$urlRouterProvider', '$httpProvider',
         function ($controllerProvider, $compileProvider, $filterProvider, $provide, $stateProvider, $urlRouterProvider, $httpProvider) {
             
-            $httpProvider.defaults.withCredentials = true;
-            $httpProvider.interceptors.push('securityProvider');
-
             fdui.registerRoutes($stateProvider, $urlRouterProvider);
         }
     ]);
@@ -72,6 +70,7 @@ var fdui = {
             });
         }
     ]);
+
     angular.element(document).ready(function () {
         angular.bootstrap(document, [fdui.settings.applicationName], { strictDi: true });
     });

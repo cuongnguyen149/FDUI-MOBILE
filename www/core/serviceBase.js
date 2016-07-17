@@ -31,7 +31,7 @@
     ServiceBase.prototype.getAsync = function (actionName) {
         var self = this;
         var d = this.$q.defer();
-        this.$http.get(this.url + actionName).then(
+        this.$http.get(actionName).then(
             function successCallback(response) {
                 d.resolve(response.data);
             },

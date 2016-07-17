@@ -6,6 +6,10 @@
 			login: 'login',
 			dashboard: 'dashboard',
 			todo: 'todo'
+		},
+		pagination: {
+			pageSize : 7,
+			currentPage: 0
 		}	
 	};
 })();
@@ -16,15 +20,19 @@
 'use strict';
 
 (function (ViewModelBase) {
-    function DashboardViewModel($filter, searchService, todoService) {
-        this.$filter = $filter;
-        this.$searchService = searchService;
-        this.$todoService = todoService;
-        this.recentSearchCurrentPage = 0;
-        this.todoCurrentPage = 0;
+    function DashboardViewModel($filter, searchService, todoService, $ionicSlideBoxDelegate) {
+        this.$filter                    = $filter;
+        this.$ionicSlideBoxDelegate     = $ionicSlideBoxDelegate;
+        this.$searchService             = searchService;
+        this.$todoService               = todoService;
+        this.recentSearchCurrentPage    = fdui.const.pagination.currentPage;
+        this.todoCurrentPage            = fdui.const.pagination.currentPage;
+        this.pageSize                   = fdui.const.pagination.pageSize;
+        this.isSearchRecentLoading      = true;
         ViewModelBase.call(this);
     }
-    DashboardViewModel.$inject = ['$filter', 'searchService', 'todoService'];
+
+    DashboardViewModel.$inject = ['$filter', 'searchService', 'todoService', '$ionicSlideBoxDelegate'];
 
     DashboardViewModel.prototype = Object.create(ViewModelBase.prototype);
     DashboardViewModel.prototype.constructor = DashboardViewModel;
@@ -33,14 +41,20 @@
         var self = this;
         console.log('init dashboardViewModel');
         var userName = self.getLocalStorageItem("userName");
-        this.$searchService.getRecentSearchAsync(userName).then(function(response) {
-            self.response = response.responseEntity.filter(function(obj) {
-                return obj.type !== 'ADVANCED_SEARCH';
-            });    
+
+        this.$searchService.getSimpleSearchResultAsync().then(function(searchRecentResponse) {
+        //     self.searchRecentResponse = searchRecentResponse.responseEntity.filter(function(obj) {
+        //         return obj.type !== 'ADVANCED_SEARCH';
+        //     });
+        //     self.arrayPageNumber = self.getArrayPageNumber(self.searchRecentResponse.length);    
+            self.searchRecentResponse = [{name: 'tesst'},{name: 'tesst'}];
+            self.arrayPageNumber = [0, 1];
+            self.$ionicSlideBoxDelegate.update();
+            self.isSearchRecentLoading = false; 
         });
-        this.$todoService.getToDoTileAsync().then(function(todoResponse) {
-            self.todoResponse = todoResponse.responseEntity.resultsetdata;
-        });
+        // this.$todoService.getToDoTileAsync().then(function(todoResponse) {
+        //     self.todoResponse = todoResponse.responseEntity.resultsetdata;
+        // });
     };
 
     DashboardViewModel.prototype.dispose = function () {
@@ -50,10 +64,18 @@
     DashboardViewModel.prototype.getDashboardTiles = function () {
 
     };
-    fdui.viewModel('dashboardViewModel', DashboardViewModel);
-    
-})(fdui.ViewModelBase);
 
+    DashboardViewModel.prototype.titleClick = function () {
+      console.log('title click');
+    };
+
+    DashboardViewModel.prototype.docClick = function () {
+      console.log('Doc click');
+    };
+
+    fdui.viewModel('dashboardViewModel', DashboardViewModel);
+
+})(fdui.ViewModelBase);
 
 (function (ViewModelBase) {
     function DependenciesInjectionSample($http) {
@@ -114,15 +136,15 @@
 			this.passwordEmpty = true;
 		}
 		if(self.userName && self.password){
-			this.securityService.checkCredentialsAsync(self.userName, self.password).then(function(response){
-	            if(response.success){
-	            	self.setLocalStorageItem('userName', self.userName);
+			// this.securityService.checkCredentialsAsync(self.userName, self.password).then(function(response){
+	  //           if(response.success){
+	  //           	self.setLocalStorageItem('userName', self.userName);
 					self.navigateTo('dashboard');
-	            }else{
-	            	self.errorLogin = true;
-	            	self.errorMessage = response.errors.errorMessage;
-	            }
-	        });
+	  //           }else{
+	  //           	self.errorLogin = true;
+	  //           	self.errorMessage = response.errors.errorMessage;
+	  //           }
+	  //       });
 		}
 	};
 
@@ -140,6 +162,31 @@
 
     fdui.viewModel('simpleViewModel', SimpleViewModel);
 })();
+/*
+ * NotificationViewModel
+ */
+
+'use strict';
+
+(function (ViewModelBase) {
+    function NotificationViewModel() {
+        ViewModelBase.call(this);
+    }
+
+    NotificationViewModel.prototype = Object.create(ViewModelBase.prototype);
+    NotificationViewModel.prototype.constructor = NotificationViewModel;
+
+    NotificationViewModel.prototype.init = function () {
+        console.log('init notificationViewModel');
+    };
+
+    NotificationViewModel.prototype.dispose = function () {
+        console.log('dispose notificationViewModel');
+    };
+
+    fdui.viewModel('notificationViewModel', NotificationViewModel);
+
+})(fdui.ViewModelBase);
 /*
  * TodoViewModel
  */
@@ -189,31 +236,6 @@
 })(fdui.ViewModelBase);
 
 /*
- * NotificationViewModel
- */
-
-'use strict';
-
-(function (ViewModelBase) {
-    function NotificationViewModel() {
-        ViewModelBase.call(this);
-    }
-
-    NotificationViewModel.prototype = Object.create(ViewModelBase.prototype);
-    NotificationViewModel.prototype.constructor = NotificationViewModel;
-
-    NotificationViewModel.prototype.init = function () {
-        console.log('init notificationViewModel');
-    };
-
-    NotificationViewModel.prototype.dispose = function () {
-        console.log('dispose notificationViewModel');
-    };
-
-    fdui.viewModel('notificationViewModel', NotificationViewModel);
-
-})(fdui.ViewModelBase);
-/*
  * MenuOneViewModel
  */
 
@@ -260,25 +282,6 @@
 
     fdui.viewModel('accountViewModel', AccountViewModel);
 })(fdui.ViewModelBase);
-(function(ViewModelBase){
-    function ChatDetailViewModel(chatsService, $stateParams) {
-        this.chatsService = chatsService;
-        this.$stateParams = $stateParams;
-
-        ViewModelBase.call(this);
-    }
-
-    ChatDetailViewModel.$inject = ['chatsService', '$stateParams'];
-
-    ChatDetailViewModel.prototype = Object.create(ViewModelBase.prototype);
-    ChatDetailViewModel.prototype.constructor = ChatDetailViewModel;
-
-    ChatDetailViewModel.prototype.init = function () {
-        this.chat = this.chatsService.findById(this.$stateParams.id);
-    }
-
-    fdui.viewModel('chatDetailViewModel', ChatDetailViewModel);
-})(fdui.ViewModelBase);
 (function (ViewModelBase) {
     function ChatsViewModel(chatsService) {
         this.chatService = chatsService;
@@ -297,6 +300,25 @@
 
 
     fdui.viewModel('chatsViewModel', ChatsViewModel);
+})(fdui.ViewModelBase);
+(function(ViewModelBase){
+    function ChatDetailViewModel(chatsService, $stateParams) {
+        this.chatsService = chatsService;
+        this.$stateParams = $stateParams;
+
+        ViewModelBase.call(this);
+    }
+
+    ChatDetailViewModel.$inject = ['chatsService', '$stateParams'];
+
+    ChatDetailViewModel.prototype = Object.create(ViewModelBase.prototype);
+    ChatDetailViewModel.prototype.constructor = ChatDetailViewModel;
+
+    ChatDetailViewModel.prototype.init = function () {
+        this.chat = this.chatsService.findById(this.$stateParams.id);
+    }
+
+    fdui.viewModel('chatDetailViewModel', ChatDetailViewModel);
 })(fdui.ViewModelBase);
 (function (ServiceBase) {
     function ChatsService($stateParams) {
@@ -402,7 +424,7 @@
 	};
 
 	SearchService.prototype.getSimpleSearchResultAsync = function () {
-	    return this.getAsync('/rest/search?keywords=Doc&_dc=1467261494166&page=1&start=0&pagesize=350');
+	    return this.getAsync('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys');
 	};
 
 	SearchService.prototype.getSimpleSearchKeywordsAsync = function () {
@@ -467,6 +489,25 @@
 'use strict';
 
 (function () {
+    function PaginationFilter() {
+        return function(input, start) {
+            if(input){
+                start = +start; //parse to int
+                return input.slice(start);
+            }
+        }
+    }
+
+    fdui.filter('paginationFilter', PaginationFilter);
+})();
+
+/*
+ * testFilter
+ */
+
+'use strict';
+
+(function () {
     function TestFilter() {
         return function(input, start) {
             if(input){
@@ -477,4 +518,56 @@
     }
 
     fdui.filter('testFilter', TestFilter);
+})();
+
+/*
+ * testFilter
+ */
+
+'use strict';
+
+(function () {
+    function SearchTileDirective() {
+        return {
+        	replace: true,
+		    templateUrl: './directive/searchTileDirective/searchTileDirective.html'
+		};
+    }
+
+    fdui.directive('searchTileDirective', SearchTileDirective);
+})();
+
+/*
+ * 
+ */
+
+'use strict';
+
+(function () {
+    function SpinnerDirective() {
+        return {
+        	replace: true,
+		    templateUrl: './directive/spinnerDirective/spinnerDirective.html'
+		};
+    }
+
+    fdui.directive('spinnerDirective', SpinnerDirective);
+})();
+
+/*
+ * testFilter
+ */
+
+'use strict';
+
+(function () {
+    function ToDoTileDirective() {
+        return {
+        	restrict: 'EA',
+        	replace: false,
+		    templateUrl: './directive/toDoTileDirective/toDoTileDirective.html'
+		};
+    }
+
+    fdui.directive('toDoTileDirective', ToDoTileDirective);
 })();

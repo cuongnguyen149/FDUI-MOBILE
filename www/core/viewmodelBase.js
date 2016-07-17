@@ -25,6 +25,16 @@
         var localStorage = this.$window.localStorage;
         return localStorage[key];
     };
+    ViewModelBase.prototype.getArrayPageNumber = function(length){
+        var arrayPageNumber = [],
+            pageSize        = fdui.const.pagination.pageSize;
+        for(var i = 0; i < length/pageSize; i++){
+            arrayPageNumber.push(i);
+        }
+
+        return arrayPageNumber;
+    };
+    
     ViewModelBase.prototype.dispose = function () {
 
     };
