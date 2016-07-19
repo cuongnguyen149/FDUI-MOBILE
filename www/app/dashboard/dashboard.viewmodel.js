@@ -42,17 +42,7 @@
         // this.$todoService.getToDoTileAsync().then(function(todoResponse) {
         //     self.todoResponse = todoResponse.responseEntity.resultsetdata;
         // });
-        self.$ionicPopover.fromTemplateUrl('./popupandpopover/popoveruser.html', {
-           self: this 
-        }).then(function(popoverUser) {
-           self.popoverUser = popoverUser;
-        });
-
-        self.$ionicPopover.fromTemplateUrl('./popupandpopover/popoverMore.html', {
-           self: this
-        }).then(function(popoverMore) {
-           self.popoverMore = popoverMore;
-        });
+       
     };
 
     DashboardViewModel.prototype.dispose = function () {

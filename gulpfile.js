@@ -25,7 +25,7 @@ var coreFiles = [
     './www/core/viewmodelBase.js'];
 var coreBundleFile = 'core_bundle.js';
 
-var appFiles = ['./www/const/*.js', './www/app/**/*.js', './www/service/**/*.js', './www/filter/**/*.js'];
+var appFiles = ['./www/const/*.js', './www/app/**/*.js', './www/service/**/*.js', './www/filter/**/*.js', './www/directive/**/*.js'];
 var appBundleFile = 'app_bundle.js';
 
 gulp.task('default', ['sass', 'debug']);
